@@ -40,17 +40,16 @@ class MyClassfier(DecisionTreeClassifier):
 
 app = Flask(__name__)
 
+app.url_map.converters['clf'] = MyClassfier
+
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
-
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('index.html', href2='')
     else:
         myage = request.form['age']
         mygender = request.form['gender']
-        model = MyClassfier()
-        model = load('app/watch-recommender.joblib')
         model = MyClassfier()
         with open(f"app/watch.pkl",'rb') as file:
             model  = pkl.loads(file.read())

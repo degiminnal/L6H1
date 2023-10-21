@@ -37,10 +37,11 @@ class MyClassfier(DecisionTreeClassifier):
 
 
 
-app = current_app
+app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
+    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('index.html', href2='')
@@ -54,6 +55,7 @@ def route_index():
 
 @app.route('/watch', methods=['GET', 'POST'])
 def route_watch():
+    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('watch.html', href2='')
@@ -66,6 +68,7 @@ def route_watch():
 
 @app.route('/phone', methods=['GET', 'POST'])
 def route_phone():
+    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('phone.html', href2='')
@@ -78,6 +81,7 @@ def route_phone():
 
 @app.route('/music', methods=['GET', 'POST'])
 def route_music():
+    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('music.html', href2='')
@@ -91,6 +95,7 @@ def route_music():
 
 @app.route('/travel', methods=['GET', 'POST'])
 def route_travel():
+    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('travel.html', href2='')
@@ -104,6 +109,7 @@ def route_travel():
 
 @app.route('/vehicle', methods=['GET', 'POST'])
 def route_vehicle():
+    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('vehicle.html', href2='')

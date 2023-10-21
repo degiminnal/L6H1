@@ -48,8 +48,8 @@ def route_index():
     else:
         myage = request.form['age']
         mygender = request.form['gender']
-        # model = load('app/watch-recommender.joblib')
         model = MyClassfier()
+        model = load('app/watch-recommender.joblib')
         predictions = model.predict([[myage, mygender]])
         return render_template('index.html', href2='The suitable watch for you (age:'+str(myage)+' ,gender:'+str(mygender)+') is:'+ str(predictions[0]))
     

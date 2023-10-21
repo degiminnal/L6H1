@@ -15,6 +15,6 @@ def hello_world():
         myage = int(request.form['age'])
         mygender = int(request.form['gender'])
         model = load('app/watch-recommender.joblib')
-        # predictions = model.predict([[myage, mygender]])
-        return render_template('index.html', href2='The suitable bread for you (age:'+str(myage)+' ,gender:'+str(mygender)+') is:'+ str(123))
+        predictions = model.predict([[myage, mygender]])
+        return render_template('index.html', href2='The suitable bread for you (age:'+str(myage)+' ,gender:'+str(mygender)+') is:'+ str(predictions[0]))
 

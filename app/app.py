@@ -6,7 +6,37 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 with app.app_context():
-    from utils import MyClassfier
+    import numpy as np
+    from sklearn.tree import DecisionTreeClassifier
+    class MyClassfier(DecisionTreeClassifier):
+        def __init__(self):
+            super().__init__()
+            self.dic = dict()
+            
+        def encodeStr(self, x):
+            x = x.copy()
+            for i,col in enumerate(x.columns):
+                if str(x[col].dtype)!="object":
+                    continue
+                dic = {_:i for i,_ in enumerate(list(set(x[col])))}
+                x[col] = np.array([dic[_] for _ in x[col]])
+                self.dic[i] = dic
+            return x
+        
+        def fit(self, x, y):
+            x = self.encodeStr(x)
+            return super().fit(x,y)
+            
+        def convert_(self,x):
+            try:
+                float(x)
+                return float(x)
+            except:
+                return -1
+
+        def predict(self, datas):
+            datas = [[self.dic.get(i_,{x_:self.convert_(x_)}).get(x_, -1) for i_,x_ in enumerate(data)] for data in datas]
+            return super().predict(datas)
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():

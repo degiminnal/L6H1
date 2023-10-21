@@ -40,6 +40,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
+    print(__name__)
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('index.html', href2='')

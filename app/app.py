@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from joblib import load
 from sklearn.tree import DecisionTreeClassifier
-from flask import Flask, render_template, request, current_app
+from flask import Flask, render_template, request
 
 class MyClassfier(DecisionTreeClassifier):
     def __init__(self):
@@ -41,21 +41,21 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
-    _mc_=MyClassfier()
+
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('index.html', href2='')
     else:
         myage = request.form['age']
         mygender = request.form['gender']
-        model = load('app/watch-recommender.joblib')
+        # model = load('app/watch-recommender.joblib')
+        model = MyClassfier()
         predictions = model.predict([[myage, mygender]])
         return render_template('index.html', href2='The suitable watch for you (age:'+str(myage)+' ,gender:'+str(mygender)+') is:'+ str(predictions[0]))
     
 
 @app.route('/watch', methods=['GET', 'POST'])
 def route_watch():
-    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('watch.html', href2='')
@@ -68,7 +68,6 @@ def route_watch():
 
 @app.route('/phone', methods=['GET', 'POST'])
 def route_phone():
-    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('phone.html', href2='')
@@ -81,7 +80,6 @@ def route_phone():
 
 @app.route('/music', methods=['GET', 'POST'])
 def route_music():
-    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('music.html', href2='')
@@ -95,7 +93,6 @@ def route_music():
 
 @app.route('/travel', methods=['GET', 'POST'])
 def route_travel():
-    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('travel.html', href2='')
@@ -109,7 +106,6 @@ def route_travel():
 
 @app.route('/vehicle', methods=['GET', 'POST'])
 def route_vehicle():
-    _mc_=MyClassfier()
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('vehicle.html', href2='')

@@ -2,14 +2,14 @@ import os
 import numpy as np
 import pandas as pd
 from joblib import load
-from sklearn.tree import DecisionTreeClassifier
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
+with app.app_context():
+    from utils import MyClassfier
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
-    print(__name__)
     request_type_str = request.method
     if request_type_str == 'GET':
         return render_template('index.html', href2='')

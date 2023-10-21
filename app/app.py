@@ -1,4 +1,5 @@
 import os
+import pickle as pkl
 import numpy as np
 import pandas as pd
 from joblib import load
@@ -50,6 +51,9 @@ def route_index():
         mygender = request.form['gender']
         model = MyClassfier()
         model = load('app/watch-recommender.joblib')
+        model = MyClassfier()
+        with open(f"app/watch.pkl",'rb') as file:
+            model  = pkl.loads(file.read())
         predictions = model.predict([[myage, mygender]])
         return render_template('index.html', href2='The suitable watch for you (age:'+str(myage)+' ,gender:'+str(mygender)+') is:'+ str(predictions[0]))
     
